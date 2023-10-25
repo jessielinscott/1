@@ -1,0 +1,35 @@
+import requests
+import csv
+from bs4 import BeautifulSoup
+
+# Send a GET request to the web page
+url = "https://www.example.com/table"
+response = requests.get(url)
+
+# Check the response status
+if response.status_code == 200:
+    # Create a BeautifulSoup object with the HTML content of the page
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find the table on the page
+    table = soup.find('table')
+
+    # Create a CSV file to write the data
+    with open('data.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+
+        # Iterate over the table rows
+        for row in table.find_all('tr'):
+            data = []
+
+            # Iterate over the cells in the row
+            for cell in row.find_all('td'):
+                data.append(cell.text.strip())
+
+            # Write the data to the CSV file
+            writer.writerow(data)
+
+    print("Data successfully extracted and saved to data.csv")
+
+else:
+    print("Error retrieving the page")
