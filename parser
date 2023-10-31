@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 url = "https://www.example.com/table"
 response = requests.get(url)
 
-# Check the response status.
+# Check the response status
 if response.status_code == 200:
     # Create a BeautifulSoup object with the HTML content of the page
     soup = BeautifulSoup(response.text, 'html.parser')
